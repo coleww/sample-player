@@ -23,11 +23,11 @@ function SamplePlayer(context) {
 		afterSetting: onNodePropertySet
 	});
 
-	
+
 	// TODO: player can be mono or poly i.e. only one buffer can play at a given time or many can overlap
 
 	node.start = function(when, offset, duration) {
-		
+
 		var buffer = nodeProperties['buffer'];
 		if(!buffer) {
 			console.info('OpenMusic SamplePlayer: no buffer to play, so byeee!');
@@ -36,11 +36,11 @@ function SamplePlayer(context) {
 
 		when = when !== undefined ? when : 0;
 		offset = offset !== undefined ? offset : 0;
-		
+
 		// TODO This is mega ugly but urgh what is going on urgh
 		// if I just pass 'undefined' as duration Chrome doesn't play anything
 		if(window.webkitAudioContext) {
-			console.log('correcting for chrome aghh');
+			// console.log('correcting for chrome aghh');
 			var sampleLength = buffer.length;
 			duration = duration !== undefined ? duration : sampleLength - offset;
 		}
@@ -55,7 +55,7 @@ function SamplePlayer(context) {
 
 		// console.log('start', 'when', when, 'offset', offset, 'duration', duration);
 		bs.start(when, offset, duration);
-		
+
 	};
 
 	node.stop = function(when) {
@@ -67,7 +67,7 @@ function SamplePlayer(context) {
 			source.stop(when);
 			removeFromQueue(source);
 		});
-		
+
 		pitchBend.stop(when);
 	};
 
@@ -76,7 +76,7 @@ function SamplePlayer(context) {
 	};
 
 	return node;
-	
+
 	//~~~
 
 	function makeBufferSource() {
@@ -94,7 +94,7 @@ function SamplePlayer(context) {
 		});
 
 		return source;
-		
+
 	}
 
 	function onBufferEnded(e) {
